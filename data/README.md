@@ -1,4 +1,4 @@
 # Datafiles:
 
 ## meadpowell.csv
-  End-of-year storage in Lake Mead and Lake Powell, in thousands of acre feet, Source: USBR
+  End-of-water-year (Sept. 30) storage in Lake Mead and Lake Powell, in thousands of acre feet, Source: USBR
