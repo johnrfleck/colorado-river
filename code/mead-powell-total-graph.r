@@ -2,15 +2,20 @@
 library(ggplot2)
 library(tidyverse)
 library(readr)
+library(reshape2)
 
 # read data
 mp <- read_csv("./data/meadpowell.csv", col_names=TRUE)
 
 # add up total storage
-mp$Storage <- mp$Mead + mp$Powell
+mp$Total <- mp$Mead + mp$Powell
+newdata <- as_tibble(melt(mp, id.vars="Year", 
+                          variable.name="Reservoir", 
+                          value.name="Storage"))
+newdata <- filter(newdata, Storage>0)
 
 # plot it
-ggplot(mp, aes(x=Year, y=Storage/1000)) +
+ggplot(newdata, aes(x=Year, y=Storage, colour=Reservoir)) +
   theme_bw() +
   theme(plot.title = element_text(size = rel(2)),
         panel.background = element_rect(colour = NA),
