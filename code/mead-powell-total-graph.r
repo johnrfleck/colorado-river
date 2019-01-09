@@ -24,6 +24,6 @@ ggplot(newdata, aes(x=Year, y=Storage, colour=Reservoir)) +
         axis.title = element_text(face = "bold",size = rel(1))) +
   geom_line(size=1.5) +
   ylab("millions of acre feet") +
-  xlab("year") +
+  xlab("Data: USBR\nGraph:John Fleck, University of New Mexico Water Resources Program") +
   ggtitle("Combined Storage, Lakes Mead and Powell")
 
