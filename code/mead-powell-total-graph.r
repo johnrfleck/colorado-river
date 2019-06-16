@@ -22,8 +22,9 @@ ggplot(newdata, aes(x=Year, y=Storage, colour=Reservoir)) +
         plot.background = element_rect(colour = NA),
         plot.subtitle = element_text(size = rel(1.5)),
         axis.title = element_text(face = "bold",size = rel(1))) +
-  geom_line(size=1.5) +
+  geom_line(size=1) +
   ylab("millions of acre feet") +
-  xlab("Data: USBR\nGraph:John Fleck, University of New Mexico Water Resources Program") +
+  xlab("Data: USBR\nGraph:John Fleck, University of New Mexico Water Resources Program\n
+       Code and data: https://github.com/johnrfleck/colorado-river") +
   ggtitle("Combined Storage, Lakes Mead and Powell")
 
