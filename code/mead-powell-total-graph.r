@@ -15,7 +15,7 @@ newdata <- as_tibble(melt(mp, id.vars="Year",
 newdata <- filter(newdata, Storage>0)
 
 # plot it
-ggplot(newdata, aes(x=Year, y=Storage, colour=Reservoir)) +
+ggplot(newdata, aes(x=Year, y=Storage/1000, colour=Reservoir)) +
   theme_bw() +
   theme(plot.title = element_text(size = rel(2)),
         panel.background = element_rect(colour = NA),
