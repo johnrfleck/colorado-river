@@ -11,6 +11,13 @@ library(readr)
 mead <- read_csv("https://www.usbr.gov/uc/water/hydrodata/reservoir_data/921/csv/17.csv")
 powell <- read_csv("https://www.usbr.gov/uc/water/hydrodata/reservoir_data/919/csv/17.csv")
 
+# Find the last date for each reservoir where we have data
+mead_max_date <- max(mead$datetime, na.rm = TRUE)
+powell_max_date <- max(powell$datetime, na.rm = TRUE)
+
+# Use the earlier of the two (ensures we have data for both)
+common_max_date <- min(mead_max_date, powell_max_date)
+
 # merge the two datasets
 mp <- full_join(mead, powell, by = "datetime")
 
@@ -31,8 +38,12 @@ mp$Total <- mp$Mead + mp$Powell
 newdata <- as_tibble(gather(mp, 'Mead','Powell','Total', key="reservoir", value="volume" ))
 #newdata <- filter(newdata, Storage>0)
 
+# Truncate to the last date for which we have data for both reservoirs
+newdata <- newdata %>%
+  filter(datetime <= common_max_date)
+
 # plot it
-ggplot(newdata, aes(x=datetime, y=volume/1000000, colour=reservoir)) +
+p <- ggplot(newdata, aes(x=datetime, y=volume/1000000, colour=reservoir)) +
   theme_bw() +
   theme(plot.title = element_text(size = rel(2)),
         panel.background = element_rect(colour = NA),
@@ -44,4 +55,6 @@ ggplot(newdata, aes(x=datetime, y=volume/1000000, colour=reservoir)) +
   xlab("Data: USBR\nGraph:John Fleck, Utton Center, University of New Mexico School of Law\n
        Code and data: https://github.com/johnrfleck/colorado-river") +
   ggtitle("Combined Storage, Lakes Mead and Powell")
+
+print(p)
 
